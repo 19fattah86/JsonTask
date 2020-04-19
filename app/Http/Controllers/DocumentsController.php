@@ -46,14 +46,16 @@ class DocumentsController extends Controller
     $document = DB::table('documents')->find($id);
     if ($document===null)
     {
-       header('HTTP/1.1 404 Not Found');
+        http_response_code(404);
+        return http_response_code(). ' '.'Not found';
     }
     else {
         if ($document->status == "draft") {
             return view('editform', ['id' => $id, 'document' => $document->payload]);
         } else {
-            http_response_code(400);
-        //    header("HTTP/1.1 400 Bad request");
+          http_response_code(400);
+           return http_response_code(). ' '.'You can not edit this document';
+        //  header("HTTP/1.1 400 Bad request");
         // abort(400,'Bad request');
         }
     }
@@ -79,7 +81,8 @@ class DocumentsController extends Controller
         }
         else
         {
-            header("HTTP/1.1 200 OK");
+            http_response_code(200);
+            return http_response_code(). ' '.'You can not publish this document';
 //            abort(200,'The doocument can not be published');
         }
     }
