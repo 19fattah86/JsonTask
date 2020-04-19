@@ -15,7 +15,7 @@
                     @endif
 
                     You are logged in! <br>
-                        <a href="/documents"><h2>Go to your documents</h2></a>
+                        <a href="/documents"><h2>Go to your JSON documents</h2></a>
                 </div>
             </div>
         </div>
