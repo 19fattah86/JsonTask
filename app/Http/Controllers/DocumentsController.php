@@ -65,9 +65,15 @@ class DocumentsController extends Controller
     {
         $edited_doc=$request->get('jsontext');
         $document = Document::find($id);
-        $document->payload=$edited_doc;
-        $document->save();
-         return redirect('documents') ->with('alert', 'Successfully editted!');
+        if($this->isJson($edited_doc))
+        {
+            $document->payload = $edited_doc;
+            $document->save();
+            return redirect('documents')->with('alert', 'Successfully editted!');
+        } else
+        {
+            echo "Json is not valid";
+        }
     }
     //Publish a draft action
     public function publishdocument($id,Request $request)
@@ -85,5 +91,9 @@ class DocumentsController extends Controller
             return http_response_code(). ' '.'You can not publish this document';
 //            abort(200,'The doocument can not be published');
         }
+    }
+    function isJson($string) {
+        json_decode($string);
+        return (json_last_error() == JSON_ERROR_NONE);
     }
 }
