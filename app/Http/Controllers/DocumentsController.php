@@ -18,7 +18,7 @@ class DocumentsController extends Controller
             ->orderBy('id', 'desc')
             ->paginate(20);
         $jsdocument=null;
-        $myArr = array();
+       // $myArr = array();
 //foreach ($documents as $document)
 //{
 //    $jsdocument=json_encode($document);
@@ -28,7 +28,7 @@ class DocumentsController extends Controller
     }
 
     //Create new document action
-    public function create(Request $request)
+    public function create()
     {
         $userid=Auth::id();
         //create a draft document
@@ -41,7 +41,7 @@ class DocumentsController extends Controller
           return redirect('documents')->with('alert', 'Successfully created!');
     }
     //Open editting form action
-    public function showeditform($id,Request $request)
+    public function showeditform($id)
     {
     $document = DB::table('documents')->find($id);
     if ($document===null)
@@ -72,11 +72,11 @@ class DocumentsController extends Controller
             return redirect('documents')->with('alert', 'Successfully editted!');
         } else
         {
-            echo "Json is not valid";
+            return "Json is not valid";
         }
     }
     //Publish a draft action
-    public function publishdocument($id,Request $request)
+    public function publishdocument($id)
     {
         $document = Document::find($id);
 
@@ -92,6 +92,7 @@ class DocumentsController extends Controller
 //            abort(200,'The doocument can not be published');
         }
     }
+    //function to check if a string is valid json
     function isJson($string) {
         json_decode($string);
         return (json_last_error() == JSON_ERROR_NONE);
